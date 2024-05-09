@@ -4,14 +4,14 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cars {
+public class Car {
     private int CarID;
     private String model;
     private Year year;
     private String registeringNumber;
     private int price;
 
-    public Cars(int carID, String model, Year year, String registeringNumber, int price) {
+    public Car(int carID, String model, Year year, String registeringNumber, int price) {
         CarID = carID;
         this.model = model;
         this.year = year;
@@ -19,7 +19,7 @@ public class Cars {
         this.price = price;
     }
 
-    public Cars(){
+    public Car(){
         // default
     }
 
@@ -62,9 +62,9 @@ public class Cars {
     public void setPrice(int price) {
         this.price = price;
     }
-    public static Cars createCar(String model, Year year, String registeringNumber, int price) {
+    public static Car createCar(String model, Year year, String registeringNumber, int price) {
         // Instantiate a new Cars object with provided information
-        Cars car = new Cars();
+        Car car = new Car();
         car.setModel(model);
         car.setYear(year);
         car.setRegisteringNumber(registeringNumber);
@@ -92,7 +92,7 @@ public class Cars {
     }
 
     // Method to search for cars by model
-    public List<Cars> searchCarsByModel(String model) {
+    public List<Car> searchCarsByModel(String model) {
         // Retrieve car records matching the provided model
         // Return a list of matching cars
         return new ArrayList<>();
