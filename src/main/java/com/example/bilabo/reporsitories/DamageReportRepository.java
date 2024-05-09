@@ -1,4 +1,4 @@
 package com.example.bilabo.reporsitories;
 
-public class AfhentningRepository {
+public class DamageReportRepository {
 }
