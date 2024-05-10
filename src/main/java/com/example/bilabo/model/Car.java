@@ -12,7 +12,7 @@ public class Car {
     private int price;
 
     public Car(int carID, String model, Year year, String registeringNumber, int price) {
-        CarID = carID;
+        this.CarID = carID;
         this.model = model;
         this.year = year;
         this.registeringNumber = registeringNumber;
