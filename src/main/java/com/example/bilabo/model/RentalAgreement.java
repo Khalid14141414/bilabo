@@ -22,7 +22,7 @@ public class RentalAgreement {
     }
 
     public RentalAgreement() {
-
+   // default constructor
     }
 
 
