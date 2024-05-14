@@ -39,7 +39,7 @@ public class CarReporsitory {
             Car car = new Car();
             car.setCarID(rs.getInt("bil_id"));
             car.setModel(rs.getString("model"));
-            car.setYear(rs.getObject("årgang", Year.class));
+            car.setYear(rs.getInt("årgang"));
             car.setRegisteringNumber(rs.getString("registreringsnummer"));
             car.setPrice((int) rs.getDouble("pris"));
             return car;
@@ -56,7 +56,7 @@ public class CarReporsitory {
         Car car = new Car();
         car.setCarID(rs.getInt("bil_id"));
         car.setModel(rs.getString("model"));
-        car.setYear(rs.getObject("årgang", java.time.Year.class));
+        car.setYear(rs.getInt("årgang"));
         car.setRegisteringNumber(rs.getString("registreringsnummer"));
         car.setPrice((int) rs.getDouble("pris"));
         return car;

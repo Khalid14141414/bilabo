@@ -7,11 +7,12 @@ import java.util.List;
 public class Car {
     private int CarID;
     private String model;
-    private Year year;
+    private int year;
     private String registeringNumber;
     private int price;
 
-    public Car(int carID, String model, Year year, String registeringNumber, int price) {
+
+    public Car(int carID, String model, int year, String registeringNumber, int price) {
         this.CarID = carID;
         this.model = model;
         this.year = year;
@@ -39,11 +40,11 @@ public class Car {
         this.model = model;
     }
 
-    public Year getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(Year year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
@@ -62,7 +63,7 @@ public class Car {
     public void setPrice(int price) {
         this.price = price;
     }
-    public static Car createCar(String model, Year year, String registeringNumber, int price) {
+    public static Car createCar(String model, int year, String registeringNumber, int price) {
         // Instantiate a new Cars object with provided information
         Car car = new Car();
         car.setModel(model);
@@ -78,7 +79,7 @@ public class Car {
     }
 
     // Method to update an existing car record
-    public void updateCar(int carID, String model, Year year, String registeringNumber, int price) {
+    public void updateCar(int carID, String model, int year, String registeringNumber, int price) {
         // Retrieve the existing car record based on ID
         // Update the car attributes with new information
         // Perform validation checks if necessary
