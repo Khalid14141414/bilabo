@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Transaction {
     private int transactionID;
-    private int rentalAgreement;
+    private int rentalAgreementID;
     private int price;
     private LocalDateTime date;
 
     public Transaction(int transactionID, int rentalAgreement, int price, LocalDateTime date) {
         this.transactionID = transactionID;
-        this.rentalAgreement = rentalAgreement;
+        this.rentalAgreementID = rentalAgreement;
         this.price = price;
         this.date = date;
     }
@@ -29,12 +29,12 @@ public class Transaction {
         this.transactionID = transactionID;
     }
 
-    public int getRentalAgreement() {
-        return rentalAgreement;
+    public int getRentalAgreementID() {
+        return rentalAgreementID;
     }
 
-    public void setRentalAgreement(int rentalAgreement) {
-        this.rentalAgreement = rentalAgreement;
+    public void setRentalAgreementID(int rentalAgreement) {
+        this.rentalAgreementID = rentalAgreement;
     }
 
     public int getPrice() {
@@ -53,10 +53,10 @@ public class Transaction {
         this.date = date;
     }
 
-    public static Transaction createTransaction(int rentalAgreement, int price, LocalDateTime date) {
+    public static Transaction createTransaction(int rentalAgreementID, int price, LocalDateTime date) {
         // Instantiate a new Transaction object with provided information
         Transaction transaction = new Transaction();
-        transaction.setRentalAgreement(rentalAgreement);
+        transaction.setRentalAgreementID(rentalAgreementID);
         transaction.setPrice(price);
         transaction.setDate(date);
 
