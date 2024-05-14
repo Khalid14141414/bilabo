@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionPoint {
-    private int collectionPoint;
+    private int collectionPointID;
     private String address;
 
-    public CollectionPoint(int collectionPoint, String address) {
-        this.collectionPoint = collectionPoint;
+    public CollectionPoint(int collectionPointID, String address) {
+        this.collectionPointID = collectionPointID;
         this.address = address;
     }
 
     public CollectionPoint() {
     }
 
-    public int getCollectionPoint() {
-        return collectionPoint;
+    public int getCollectionPointID() {
+        return collectionPointID;
     }
 
-    public void setCollectionPoint(int collectionPoint) {
-        this.collectionPoint = collectionPoint;
+    public void setCollectionPointID(int collectionPointID) {
+        this.collectionPointID = collectionPointID;
     }
 
     public String getAddress() {
