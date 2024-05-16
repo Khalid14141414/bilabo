@@ -2,6 +2,7 @@ package com.example.bilabo.reporsitories;
 
 
 
+import com.example.bilabo.model.Damage_category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,52 +10,76 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 @Repository
 public class DamageRepo {
 
     @Autowired
     JdbcTemplate template;
 
+    // Metoden returnerer en liste over alle skadeskategorier.
+    public List<Damage_category> fetchAll() {
+        // Definerer en SQL-forespørgsel for at hente alle poster fra skadeskategoritabellen.
+        String sql = "SELECT * FROM damage_category";
 
-    // Hente alle skaderapporter fra databasen.
-    public List <DamageRepo> fetchAll(){
-        String sql = "SELECT * FROM damage_report";
-        RowMapper rowMapper = new BeanPropertyRowMapper<>(DamageRepo.class);
+        // Opretter en RowMapper til at mappe rækkerne fra resultatet af SQL-forespørgslen til skadeskategoriklassen.
+        RowMapper<Damage_category> rowMapper = new BeanPropertyRowMapper<>(Damage_category.class);
+
+        // Udfører SQL-forespørgslen ved hjælp af JdbcTemplate-objektet og returnerer resultatet som en liste af skadeskategorier.
         return template.query(sql, rowMapper);
     }
 
-    // Formålet er at insætte data fra Damage_report objektet ind i "damage_report" tabellen i databasen ved SQL-forespørgsel.
-    public void CreateDamage_report(DamageRepo d) {
-        String sql = "INSERT INTO damage_report (report_id,total_price,contract_id) VALUES (?,?,?)";
-        template.update(sql, d.getReport_id(),d.getTotal_price(),d.getContract_id());
+
+    // Metoden tilføjer en skadeskategori til databasen.
+    public void AddDamage(Damage_category d) {
+        // Definerer en SQL-forespørgsel for at indsætte en ny skadeskategori med de tilhørende værdier.
+        String sql = "INSERT INTO damage_category (category_id, damage_name, price) VALUES (?,?,?)";
+
+        // Udfører SQL-forespørgslen ved hjælp af JdbcTemplate-objektet og indsætter de nødvendige værdier.
+        template.update(sql, d.getCategory_id(),d.getDamage_name(),d.getPrice());
     }
 
-    // Update en eksiterende skade rapport i databsen, værdierne der opdateres er total_price, contract_ id fra en repport id
-    public void updateDamageReport(DamageRepo damageReport, int report_id ){
-        String sql = "UPDATE damage_report SET total_price= ?, contract_id= ? where report_id=?";
-        template.update(sql, damageReport.getTotal_price(), damageReport.getContract_id(), damageReport.getReport_id());
+    // Metoden opdaterer en skadeskategori i databasen.
+    public void updateDamage(Damage_category damage_category, int category_id) {
+        // Definerer en SQL-forespørgsel for at opdatere skadeskategorien med de nye værdier.
+        String sql = "UPDATE damage_category SET damage_name= ?, price= ? where category_id=?";
+
+        // Udfører SQL-forespørgslen ved hjælp af JdbcTemplate-objektet og opdaterer skadeskategorien med de angivne værdier.
+        template.update(sql, damage_category.getDamage_name(), damage_category.getPrice(), damage_category.getCategory_id());
     }
 
-    // Find skaderapport i databasen baseret på dens rapport id.
-    public DamageRepo findDamageReportByid(int report_id) {
-        String sql = "Select * FROM damage_report WHERE report_id = ?";
-        RowMapper<DamageRepo> rowMapper = new BeanPropertyRowMapper<>(DamageRepo.class);
-        List<DamageRepo> users = template.query(sql, rowMapper, report_id);
-        if (users.size() == 1) {
-            return users.get(0);
+    public Boolean deleteDamage(int category_id) {
+        String sql = "DELETE FROM damage_category WHERE category_id = ?";
+        return template.update(sql, category_id) > 0;
+    }
+
+    // Metoden finder en skadeskategori i databasen baseret på kategori-id.
+    public Damage_category findDamageByid(int category_id) {
+        // Definerer en SQL-forespørgsel for at hente skadeskategorien med det angivne kategori-id.
+        String sql = "SELECT * FROM damage_category WHERE category_id = ?";
+
+        // Opretter en RowMapper til at mappe rækken fra resultatet af SQL-forespørgslen til en skadeskategoriklasse.
+        RowMapper<Damage_category> rowMapper = new BeanPropertyRowMapper<>(Damage_category.class);
+
+        // Udfører SQL-forespørgslen ved hjælp af JdbcTemplate-objektet og returnerer resultatet som en liste af skadeskategorier.
+        List<Damage_category> categories = template.query(sql, rowMapper, category_id);
+
+        // Hvis der kun findes én skadeskategori med det angivne kategori-id, returneres den.
+        if (categories.size() == 1) {
+            return categories.get(0);
         } else {
-            return null;
+            return null; // Hvis ingen skadeskategori blev fundet eller flere end én blev fundet, returneres null.
         }
-
     }
 
 
 
-    // Sletter en skaderapport fra databasen baseret på report id, returnere en boolean værdi  der angiver det vellykket
-    public boolean deleteReport(int report_id){
-        String sql= "DELETE FROM damage_report WHERE report_id=?";
-        return template.update(sql,report_id)>0;
+    // Metoden finder prisen på en bestemt skadeskategori i databasen baseret på kategori-id.
+    public Double findSpecificDamagePrice(int category_id) {
+        // Definerer en SQL-forespørgsel for at hente prisen på skadeskategorien med det angivne kategori-id.
+        String sql = "SELECT price FROM damage_category WHERE category_id = ?";
+
+        // Udfører SQL-forespørgslen ved hjælp af JdbcTemplate-objektet og returnerer prisen som et Double-objekt.
+        return template.queryForObject(sql, Double.class, category_id);
     }
 
 }

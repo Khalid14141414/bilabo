@@ -1,5 +1,4 @@
 package com.example.bilabo.service;
-package com.example.bilabo.service;
 
 import com.example.bilabo.model.Damage_category;
 import com.example.bilabo.model.Damage_report;
