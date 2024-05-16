@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-public class DamageReportController {
+public class Damage_reportController {
 
     @Autowired
     Damage_reportService damage_reportService;
