@@ -29,6 +29,12 @@ public class HomeController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("adminlogin");
+        return "redirect:/";
+    }
+
     //Homepage
     @GetMapping("/home")
     public String home(HttpSession session, Model model) {
