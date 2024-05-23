@@ -42,29 +42,7 @@
     <input type="text" id="search-input" placeholder="Search...">
 </div>
 
-<script>
-    var searchInput = document.getElementById("search-input");
 
-    searchInput.addEventListener("input", function() {
-        var searchTerm = searchInput.value.toLowerCase();
-        var tableRows = document.getElementsByTagName("tr");
-
-        for (var i = 1; i < tableRows.length; i++) {
-            var cells = tableRows[i].getElementsByTagName("td");
-            var found = false;
-
-            for (var j = 0; j < cells.length; j++) {
-                var cellValue = cells[j].textContent.toLowerCase();
-                if (cellValue.includes(searchTerm)) {
-                    found = true;
-                    break;
-                }
-            }
-
-            tableRows[i].style.display = found ? "" : "none";
-        }
-    });
-</script>
 
 
 <table>

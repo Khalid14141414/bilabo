@@ -32,7 +32,7 @@ public class HomeController {
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.removeAttribute("adminlogin");
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     //Homepage
@@ -41,7 +41,7 @@ public class HomeController {
         String value = (String) session.getAttribute("username");
         model.addAttribute("username", value);
         if (!employeeService.checkSession(session)){
-            return "redirect:/";
+            return "redirect:/home";
         }
         return "home";
     }

@@ -75,22 +75,7 @@
 </table>
 
 <script>
-    const searchInput = document.getElementById('searchInput');
-    const tableRows = document.querySelectorAll('tbody tr');
 
-    searchInput.addEventListener('input', function () {
-        const searchValue = searchInput.value.toLowerCase();
-
-        tableRows.forEach(function (row) {
-            const carData = row.textContent.toLowerCase();
-
-            if (carData.includes(searchValue)) {
-                row.style.display = 'table-row';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
 </script>
 
 

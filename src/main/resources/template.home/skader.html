@@ -61,24 +61,7 @@
     </tbody>
 </table>
 
-<script>
-    const searchInput = document.getElementById('searchInput');
-    const rows = document.querySelectorAll('tbody tr');
 
-    searchInput.addEventListener('input', function() {
-        const searchText = searchInput.value.toLowerCase();
-
-        rows.forEach(function(row) {
-            const text = row.innerText.toLowerCase();
-
-            if (text.includes(searchText)) {
-                row.style.display = 'table-row';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
-</script>
 
 
 <div class="footer">
