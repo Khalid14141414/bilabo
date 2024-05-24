@@ -1,7 +1,7 @@
 package com.example.bilabo.service;
 
 import com.example.bilabo.model.DamageReport;
-import com.example.bilabo.reporsitories.Damage_reportRepo;
+import com.example.bilabo.reporsitories.DamageReportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class DamageReportService {
     @Autowired
-    Damage_reportRepo damage_reportRepo;
+    DamageReportRepo damage_reportRepo;
 
     public List<DamageReport> showReport() {
         return damage_reportRepo.fetchAll();
