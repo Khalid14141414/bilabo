@@ -4,7 +4,7 @@ import com.example.bilabo.model.*;
 import com.example.bilabo.service.CarService;
 import com.example.bilabo.service.CustomerService;
 import com.example.bilabo.service.EmployeeService;
-import com.example.bilabo.service.Leasing_contractService;
+import com.example.bilabo.service.LeasingContractService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class LeasingContractController {
 
     int number;
     @Autowired
-    Leasing_contractService leasing_contractService;
+    LeasingContractService leasing_contractService;
     @Autowired
     CarService carService;
     @Autowired
@@ -71,7 +71,7 @@ public class LeasingContractController {
         if (!employeeService.checkSession(session)){
             return "redirect:/";
         }
-        List<Leasing_contract> LC = leasing_contractService.fetchAll();
+        List<LeasingContract> LC = leasing_contractService.fetchAll();
         model.addAttribute("LC",LC );
         System.out.println(LC.size());
         double totalPrice = leasing_contractService.calculateTotalPriceOfLeasingContracts();
@@ -175,7 +175,7 @@ public class LeasingContractController {
 
     //videreførelse af tidligere metode, hvor man bliver vist en html side, og man kan trykke på confirm for at færdiggøre opretning
     @PostMapping("/createLeasingContractConfirmed")
-    public String leasingAdd(Model model, HttpSession session, Leasing_contract leasing_contract) {
+    public String leasingAdd(Model model, HttpSession session, LeasingContract leasing_contract) {
         String username = (String) session.getAttribute("username");
         LocalDate startDate = (LocalDate) session.getAttribute("startDate");
         String customername = (String) session.getAttribute("customername");

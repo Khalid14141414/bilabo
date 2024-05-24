@@ -1,15 +1,15 @@
 package com.example.bilabo.model;
 
 
-public class Specific_damage {
+public class SpecificDamage {
     private int specific_damage_id;
     private int report_id;
     private int category_id;
 
-    public Specific_damage() {
+    public SpecificDamage() {
     }
 
-    public Specific_damage(int specific_damage_id, int report_id, int category_id) {
+    public SpecificDamage(int specific_damage_id, int report_id, int category_id) {
         this.specific_damage_id = specific_damage_id;
         this.report_id = report_id;
         this.category_id = category_id;

@@ -1,8 +1,8 @@
 package com.example.bilabo.controller;
 
-import com.example.bilabo.model.Damage_category;
-import com.example.bilabo.model.Damage_report;
-import com.example.bilabo.model.Leasing_contract;
+import com.example.bilabo.model.DamageCategory;
+import com.example.bilabo.model.DamageReport;
+import com.example.bilabo.model.LeasingContract;
 import com.example.bilabo.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +16,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-public class Damage_reportController {
+public class DamageReportController {
 
     @Autowired
-    Damage_reportService damage_reportService;
+    DamageReportService damage_reportService;
     @Autowired
     DamageService damageService;
     @Autowired
-    Leasing_contractService leasing_contractService;
+    LeasingContractService leasing_contractService;
     @Autowired
     CarService carService;
 
@@ -35,7 +35,7 @@ public class Damage_reportController {
         if (!employeeService.checkSession(session)){
             return "redirect:/";
         }
-        List<Damage_report> damage_reports = damage_reportService.showReport();
+        List<DamageReport> damage_reports = damage_reportService.showReport();
         model.addAttribute("damage_report", damage_reports);
         return "skaderapport";
 
@@ -47,7 +47,7 @@ public class Damage_reportController {
         if (!employeeService.checkSession(session)){
             return "redirect:/";
         }
-        List<Leasing_contract> leasing_contracts = leasing_contractService.fetchFlow1();
+        List<LeasingContract> leasing_contracts = leasing_contractService.fetchFlow1();
         model.addAttribute("contract", leasing_contracts);
 
 
@@ -59,7 +59,7 @@ public class Damage_reportController {
     //returner en liste af leasingcontract joined med car hvor flow er 1, og contract id skal vælges
     @PostMapping("/oprettelseskaderapport")
     public String opretskaderapport(Model model, HttpSession session, Integer contract_id, RedirectAttributes redirectAttributes){
-        Leasing_contract leasing_contract = leasing_contractService.findIdAndFlow(contract_id);
+        LeasingContract leasing_contract = leasing_contractService.findIdAndFlow(contract_id);
 
         if (leasing_contract==null){
             redirectAttributes.addFlashAttribute("fejl", "Vælg venligst et af kontrakterne nedenfor");
@@ -76,7 +76,7 @@ public class Damage_reportController {
             return "redirect:/";
         }
         Integer integer = (Integer) session.getAttribute("contract");
-        List<Damage_category> damage_category =  damageService.fetchAllDamageCategories();
+        List<DamageCategory> damage_category =  damageService.fetchAllDamageCategories();
         model.addAttribute("category", damage_category);
         model.addAttribute("contractid", integer);
         session.setAttribute("contractid", integer);
@@ -85,7 +85,7 @@ public class Damage_reportController {
 
     // vælg skade og Udregn totalprisen for skaderapport
     @PostMapping("/tilføjRapport")
-    public String addDamageReport(Model model, Integer category_id, RedirectAttributes redirectAttributes, Integer finish, HttpSession session, Damage_report damage_report) {
+    public String addDamageReport(Model model, Integer category_id, RedirectAttributes redirectAttributes, Integer finish, HttpSession session, DamageReport damage_report) {
 
         Double totalPrice = (Double) session.getAttribute("totalPrice");
         if (totalPrice == null) {
@@ -133,8 +133,8 @@ public class Damage_reportController {
 
     // bekræft din kvittering og tilføj din skaderapport
     @PostMapping("/Bekræftkvittering")
-    public String kvitteringForDamageReport(Model model, RedirectAttributes redirectAttributes, Integer finish, HttpSession session, Damage_report damage_report) {
-        Leasing_contract leasing_contract = (Leasing_contract) session.getAttribute("leasingcontract");
+    public String kvitteringForDamageReport(Model model, RedirectAttributes redirectAttributes, Integer finish, HttpSession session, DamageReport damage_report) {
+        LeasingContract leasing_contract = (LeasingContract) session.getAttribute("leasingcontract");
         damage_reportService.addDamage_report(damage_report);
         carService.updateAfterDamageReport(leasing_contract.getVehicle_number());
         return "redirect:/skaderapport";
@@ -146,14 +146,14 @@ public class Damage_reportController {
         if (!employeeService.checkSession(session)){
             return "redirect:/";
         }
-        Damage_report damageReport = damage_reportService.findSpecifikReport(report_id);
+        DamageReport damageReport = damage_reportService.findSpecifikReport(report_id);
         model.addAttribute("opdater", damageReport);
         return "opdaterSkadeRapport";
     }
 
     // opdater skaderapporten
     @PostMapping("/reportUpdate")
-    public String updateReportToList(Damage_report damage_report, int report_id) {
+    public String updateReportToList(DamageReport damage_report, int report_id) {
         damage_reportService.updateReport(damage_report, report_id);
         return "redirect:/skaderapport";
     }

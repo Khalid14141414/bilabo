@@ -1,10 +1,7 @@
 package com.example.bilabo.service;
 
-import com.example.bilabo.model.Damage_category;
-import com.example.bilabo.model.Damage_report;
-import com.example.bilabo.model.Specific_damage;
+import com.example.bilabo.model.DamageCategory;
 import com.example.bilabo.reporsitories.DamageRepo;
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +12,22 @@ public class DamageService {
     @Autowired
     DamageRepo damageRepo;
 
-    public List<Damage_category> fetchAllDamageCategories(){
+    public List<DamageCategory> fetchAllDamageCategories(){
         return damageRepo.fetchAll();
     }
 
-    public void addDamage(Damage_category damage_category){
+    public void addDamage(DamageCategory damage_category){
         damageRepo.AddDamage(damage_category);
     }
 
-    public void updateCategory(Damage_category damage_category, int category_id){
+    public void updateCategory(DamageCategory damage_category, int category_id){
         damageRepo.updateDamage(damage_category, category_id);
     }
     public boolean deleteDamage(int category_id){
         return damageRepo.deleteDamage(category_id);
     }
 
-    public Damage_category findSpecifikDamage(int category_id){
+    public DamageCategory findSpecifikDamage(int category_id){
         return damageRepo.findDamageByid(category_id);
     }
 

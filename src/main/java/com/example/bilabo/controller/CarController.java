@@ -2,16 +2,14 @@ package com.example.bilabo.controller;
 
 import com.example.bilabo.model.Car;
 import com.example.bilabo.model.Employee;
-import com.example.bilabo.model.Leasing_contract;
 import com.example.bilabo.service.CarService;
 import com.example.bilabo.service.EmployeeService;
-import com.example.bilabo.service.Leasing_contractService;
+import com.example.bilabo.service.LeasingContractService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -27,7 +25,7 @@ public class CarController {
     @Autowired
     EmployeeService employeeService;
     @Autowired
-    Leasing_contractService leasingContractService;
+    LeasingContractService leasingContractService;
 
 
     // Se liste over alle biler

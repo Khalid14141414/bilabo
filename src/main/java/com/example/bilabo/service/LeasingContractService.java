@@ -2,43 +2,42 @@ package com.example.bilabo.service;
 
 
 
-import com.example.bilabo.model.Car;
-import com.example.bilabo.model.Leasing_contract;
-import com.example.bilabo.reporsitories.Leasing_contractRepo;
+import com.example.bilabo.model.LeasingContract;
+import com.example.bilabo.reporsitories.LeasingContractRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class Leasing_contractService {
+public class LeasingContractService {
     @Autowired
-    Leasing_contractRepo leasing_contractRepo;
+    LeasingContractRepo leasing_contractRepo;
 
 
-    public List <Leasing_contract> fetchAll() {
+    public List <LeasingContract> fetchAll() {
         return leasing_contractRepo.fetchAll();
     }
-    public List <Leasing_contract> fetchFlow1() {
+    public List <LeasingContract> fetchFlow1() {
         return leasing_contractRepo.fetchFlow1();
     }
 
 
-    public void addLeasingContract(Leasing_contract leasing_contract){
+    public void addLeasingContract(LeasingContract leasing_contract){
         leasing_contractRepo.createLeasingContract(leasing_contract);
     }
     public double calculateTotalPriceOfLeasingContracts() {
-        List<Leasing_contract> leasingContracts = leasing_contractRepo.fetchAll(); //Henter alle kontrakter
+        List<LeasingContract> leasingContracts = leasing_contractRepo.fetchAll(); //Henter alle kontrakter
         double totalPrice = 0.0;
 
-        for (Leasing_contract contract : leasingContracts) {
+        for (LeasingContract contract : leasingContracts) {
             totalPrice += contract.getPrice();// Tilføj kontrakt pris til den totale pris
         }
 
         return totalPrice;
     }
 
-    public Leasing_contract findIdAndFlow(int id){
+    public LeasingContract findIdAndFlow(int id){
         return leasing_contractRepo.findContractByidAndFlow(id);
     }
 }

@@ -2,7 +2,7 @@ package com.example.bilabo.model;
 
 import java.time.LocalDate;
 
-public class Leasing_contract {
+public class LeasingContract {
     private int contract_id;
     private LocalDate start_date;
     private LocalDate end_date;
@@ -14,10 +14,10 @@ public class Leasing_contract {
 
 
 
-    public Leasing_contract() {
+    public LeasingContract() {
     }
 
-    public Leasing_contract(int contract_id, LocalDate start_date, LocalDate end_date, double price ,int vehicle_number, String username, int customer_id) {
+    public LeasingContract(int contract_id, LocalDate start_date, LocalDate end_date, double price , int vehicle_number, String username, int customer_id) {
         this.contract_id = contract_id;
         this.start_date = start_date;
         this.end_date = end_date;

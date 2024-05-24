@@ -1,7 +1,6 @@
 package com.example.bilabo.controller;
 
-import com.example.bilabo.model.Car;
-import com.example.bilabo.model.Damage_category;
+import com.example.bilabo.model.DamageCategory;
 import com.example.bilabo.service.DamageService;
 import com.example.bilabo.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
@@ -30,7 +29,7 @@ public class DamageController {
         if (!employeeService.checkSession(session)){
             return "redirect:/";
         }
-        List<Damage_category> damage_category =  damageService.fetchAllDamageCategories();
+        List<DamageCategory> damage_category =  damageService.fetchAllDamageCategories();
         model.addAttribute("category", damage_category);
 
         return "skader";
@@ -46,7 +45,7 @@ public class DamageController {
     }
     // en fortsættelse og af overnævnte tilføje metode, hvor en html login forum displays
     @PostMapping("/createNewDamage")
-    public String addDamagetoList( Damage_category d, HttpSession session) {
+    public String addDamagetoList(DamageCategory d, HttpSession session) {
         damageService.addDamage(d);
         return "redirect:/skader";
     }
@@ -57,14 +56,14 @@ public class DamageController {
         if (!employeeService.checkSession(session)){
             return "redirect:/";
         }
-        Damage_category damage = damageService.findSpecifikDamage(category_id);
+        DamageCategory damage = damageService.findSpecifikDamage(category_id);
         model.addAttribute("opdater", damage);
         return "opdaterSkade";
     }
 
     //fortsættelse af overstående metode, hvor man ajourføre oplysningerne af den tildelte kategori.
     @PostMapping("/damageUpdate")
-    public String updateDamageToList(Damage_category damage_category, int category_id) {
+    public String updateDamageToList(DamageCategory damage_category, int category_id) {
         damageService.updateCategory(damage_category, category_id);
         return "redirect:/skader";
     }

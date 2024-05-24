@@ -2,7 +2,7 @@ package com.example.bilabo.reporsitories;
 
 
 
-import com.example.bilabo.model.Damage_category;
+import com.example.bilabo.model.DamageCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,12 +17,12 @@ public class DamageRepo {
     JdbcTemplate template;
 
     // Metoden returnerer en liste over alle skadeskategorier.
-    public List<Damage_category> fetchAll() {
+    public List<DamageCategory> fetchAll() {
         // Definerer en SQL-forespørgsel for at hente alle poster fra skadeskategoritabellen.
         String sql = "SELECT * FROM damage_category";
 
         // Opretter en RowMapper til at mappe rækkerne fra resultatet af SQL-forespørgslen til skadeskategoriklassen.
-        RowMapper<Damage_category> rowMapper = new BeanPropertyRowMapper<>(Damage_category.class);
+        RowMapper<DamageCategory> rowMapper = new BeanPropertyRowMapper<>(DamageCategory.class);
 
         // Udfører SQL-forespørgslen ved hjælp af JdbcTemplate-objektet og returnerer resultatet som en liste af skadeskategorier.
         return template.query(sql, rowMapper);
@@ -30,7 +30,7 @@ public class DamageRepo {
 
 
     // Metoden tilføjer en skadeskategori til databasen.
-    public void AddDamage(Damage_category d) {
+    public void AddDamage(DamageCategory d) {
         // Definerer en SQL-forespørgsel for at indsætte en ny skadeskategori med de tilhørende værdier.
         String sql = "INSERT INTO damage_category (category_id, damage_name, price) VALUES (?,?,?)";
 
@@ -39,7 +39,7 @@ public class DamageRepo {
     }
 
     // Metoden opdaterer en skadeskategori i databasen.
-    public void updateDamage(Damage_category damage_category, int category_id) {
+    public void updateDamage(DamageCategory damage_category, int category_id) {
         // Definerer en SQL-forespørgsel for at opdatere skadeskategorien med de nye værdier.
         String sql = "UPDATE damage_category SET damage_name= ?, price= ? where category_id=?";
 
@@ -53,15 +53,15 @@ public class DamageRepo {
     }
 
     // Metoden finder en skadeskategori i databasen baseret på kategori-id.
-    public Damage_category findDamageByid(int category_id) {
+    public DamageCategory findDamageByid(int category_id) {
         // Definerer en SQL-forespørgsel for at hente skadeskategorien med det angivne kategori-id.
         String sql = "SELECT * FROM damage_category WHERE category_id = ?";
 
         // Opretter en RowMapper til at mappe rækken fra resultatet af SQL-forespørgslen til en skadeskategoriklasse.
-        RowMapper<Damage_category> rowMapper = new BeanPropertyRowMapper<>(Damage_category.class);
+        RowMapper<DamageCategory> rowMapper = new BeanPropertyRowMapper<>(DamageCategory.class);
 
         // Udfører SQL-forespørgslen ved hjælp af JdbcTemplate-objektet og returnerer resultatet som en liste af skadeskategorier.
-        List<Damage_category> categories = template.query(sql, rowMapper, category_id);
+        List<DamageCategory> categories = template.query(sql, rowMapper, category_id);
 
         // Hvis der kun findes én skadeskategori med det angivne kategori-id, returneres den.
         if (categories.size() == 1) {

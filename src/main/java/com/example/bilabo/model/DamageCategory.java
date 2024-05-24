@@ -1,16 +1,16 @@
 package com.example.bilabo.model;
 
 
-public class Damage_category {
+public class DamageCategory {
     private int category_id;
     private String damage_name;
     private double price;
 
 
-    public Damage_category() {
+    public DamageCategory() {
     }
 
-    public Damage_category(int category_id, String damage_name, double price) {
+    public DamageCategory(int category_id, String damage_name, double price) {
         this.category_id = category_id;
         this.damage_name = damage_name;
         this.price = price;
