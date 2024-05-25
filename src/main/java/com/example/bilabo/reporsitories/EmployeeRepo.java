@@ -1,6 +1,5 @@
 package com.example.bilabo.reporsitories;
 
-
 import com.example.bilabo.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -16,74 +15,43 @@ public class EmployeeRepo {
     @Autowired
     JdbcTemplate template;
 
-    //Find employee hvor username er ? og user_password er ?... Vi bruger den login
+    private RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
+
     public Employee findByUserAndPassword(String username, String user_password) {
-        String sql = "SELECT * FROM Employee WHERE username=? AND user_password=?";
-        RowMapper rowMapper = new BeanPropertyRowMapper(Employee.class);
-        List<Employee> employees = template.query(sql, rowMapper, username, user_password);
-        if ((employees.size()) == 1) {
-            return employees.get(0);
-        } else {
-            return null;
-        }
-
+        List<Employee> employees = template.query("SELECT * FROM Employee WHERE username=? AND user_password=?", rowMapper, username, user_password);
+        return employees.size() == 1 ? employees.get(0) : null;
     }
 
-    // Returner en liste af alle Employees
     public List<Employee> fetchAll() {
-        String sql = "SELECT * FROM Employee";
-        RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
-        return template.query(sql, rowMapper);
+        return template.query("SELECT * FROM Employee", rowMapper);
     }
 
-    //tilføj Employee
     public void addEmployee(Employee employee) {
-        String sql = "INSERT INTO Employee (username, user_password, full_name, email, phone, is_active, is_admin) VALUES (?,?,?,?,?,?,?)";
-        template.update(sql, employee.getUsername(), employee.getUser_password(), employee.getFull_name(), employee.getEmail(), employee.getPhone(), employee.getIs_active(), employee.getIs_admin());
-
+        template.update("INSERT INTO Employee (username, user_password, full_name, email, phone, is_active, is_admin) VALUES (?,?,?,?,?,?,?)",
+                employee.getUsername(), employee.getUser_password(), employee.getFull_name(), employee.getEmail(), employee.getPhone(), employee.getIs_active(), employee.getIs_admin());
     }
-    // input username for at finde en employee
+
     public boolean doesTheUserExsit(String username){
-        String sql = "SELECT * FROM Employee WHERE Username=?";
-        RowMapper<Employee>rowMapper = new BeanPropertyRowMapper<>(Employee.class);
-        List<Employee>employees = template.query(sql,rowMapper,username);
+        List<Employee>employees = template.query("SELECT * FROM Employee WHERE Username=?", rowMapper, username);
         return !employees.isEmpty();
     }
-    // Fyr en Employee hvor username er ?
+
     public void fireEmployee(String username){
-        String sql = "UPDATE employee SET is_active = 0 WHERE username = ?";
-        template.update(sql, username);
-
+        template.update("UPDATE employee SET is_active = 0 WHERE username = ?", username);
     }
-    // Opdater Employee
+
     public void updateEmployee(Employee employee){
-        String sql = "UPDATE employee SET user_password = ?, full_name= ?, email= ?, phone= ?, is_active= ?, is_admin = ? where username=?";
-        template.update(sql,employee.getUser_password(), employee.getFull_name(), employee.getEmail(), employee.getPhone(), employee.getIs_active(), employee.getIs_admin(), employee.getUsername());
-
+        template.update("UPDATE employee SET user_password = ?, full_name= ?, email= ?, phone= ?, is_active= ?, is_admin = ? where username=?",
+                employee.getUser_password(), employee.getFull_name(), employee.getEmail(), employee.getPhone(), employee.getIs_active(), employee.getIs_admin(), employee.getUsername());
     }
-    // Find en Employee ved at kigge på username
+
     public Employee findByUsername(String username){
-        String sql = "Select * FROM employee WHERE username = ?";
-        RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
-        List<Employee> users = template.query(sql, rowMapper, username);
-        if (users.size() == 1) {
-            return users.get(0);
-        } else {
-            return null;
-        }
-
+        List<Employee> users = template.query("Select * FROM employee WHERE username = ?", rowMapper, username);
+        return users.size() == 1 ? users.get(0) : null;
     }
 
-    // Find admin hvor username er ?
     public Employee findAdmin(String username){
-        String sql = "SELECT * FROM employee WHERE is_admin=1 and username = ?";
-        RowMapper rowMapper = new BeanPropertyRowMapper<>(Employee.class);
-        List<Employee> users = template.query(sql, rowMapper, username);
-        if (users.size() == 1) {
-            return users.get(0);
-        } else {
-            return null;
-        }
-
+        List<Employee> users = template.query("SELECT * FROM employee WHERE is_admin=1 and username = ?", rowMapper, username);
+        return users.size() == 1 ? users.get(0) : null;
     }
 }

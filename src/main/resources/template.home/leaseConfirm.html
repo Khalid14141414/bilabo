@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
-    <title>Leasing Contract Confirmation</title>
+    <title>Bekræftelse af lejekontrakt</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: #e6e6e6;
             text-align: center;
-
         }
 
         p {
+            color: #2c3e50;
             margin-bottom: 10px;
         }
         table {
@@ -44,23 +44,23 @@
             padding: 10px 20px;
             border-radius: 5px;
             border: none;
-            background-color: #007bff;
+            background-color: #27ae60;
             color: white;
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: #2ecc71;
         }
     </style>
 </head>
 <body>
 
 <h1>Bekræftelse af lejekontrakt</h1>
-<p>Bekræft venligt detaljerne nedenfor:</p>
+<p>Bekræft venligst detaljerne nedenfor:</p>
 <table>
     <tr>
-        <td>Vehicle Number:</td>
+        <td>Vognnummer:</td>
         <td th:text="${opdater.getVehicle_number()}"></td>
     </tr>
     <tr>
@@ -68,7 +68,7 @@
         <td th:text="${opdater.getBrand() + ' ' + opdater.getModel() +' ' + opdater.getMake()}"></td>
     </tr>
     <tr>
-        <td>Customer id:</td>
+        <td>Kunde ID:</td>
         <td th:text="${customer}"></td>
     </tr>
     <tr>
@@ -76,28 +76,24 @@
         <td th:text="${customername}"></td>
     </tr>
     <tr>
-        <td>Start Date:</td>
+        <td>Startdato:</td>
         <td th:text="${startDate}"></td>
     </tr>
     <tr>
-        <td>End Date:</td>
+        <td>Slutdato:</td>
         <td th:text="${endDate}"></td>
     </tr>
     <tr>
-        <td>Total Price:</td>
+        <td>Total pris:</td>
         <td th:text="${totalPriceRent} + ' kr'"></td>
     </tr>
     <tr>
-        <td>Employee Username:</td>
+        <td>Medarbejder brugernavn:</td>
         <td th:text="${username}"></td>
     </tr>
-
-
-
-
 </table>
 <form method="post" action="/createLeasingContractConfirmed">
-    <input type="submit" value="Confirm">
+    <input type="submit" value="Bekræft">
     <input type="hidden" name="start_date" id="start_date" th:value="${startDate}"><br><br>
     <input type="hidden" name="end_date" id="end_date" th:value="${endDate}"><br><br>
     <input type="hidden" name="vehicle_number" id="vehicle_number" th:value="${opdater.vehicle_number}"><br><br>
@@ -107,7 +103,7 @@
 </form>
 
 <div class="footer">
-    <p>© 2024 BA - Bil Abonnementen. All rights reserved.</p>
+    <p>© 2024 BA - Bil Abonnementen. Alle rettigheder forbeholdes.</p>
 </div>
 </body>
 </html>

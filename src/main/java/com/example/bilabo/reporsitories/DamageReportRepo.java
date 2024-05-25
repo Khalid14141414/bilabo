@@ -1,7 +1,5 @@
 package com.example.bilabo.reporsitories;
 
-
-
 import com.example.bilabo.model.DamageReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -17,45 +15,28 @@ public class DamageReportRepo {
     @Autowired
     JdbcTemplate template;
 
+    private RowMapper<DamageReport> rowMapper = new BeanPropertyRowMapper<>(DamageReport.class);
 
-    // Hente alle skaderapporter fra databasen.
-    public List <DamageReport> fetchAll(){
-        String sql = "SELECT * FROM damage_report";
-        RowMapper rowMapper = new BeanPropertyRowMapper<>(DamageReport.class);
-        return template.query(sql, rowMapper);
+    public List<DamageReport> fetchAll() {
+        return template.query("SELECT * FROM damage_report", rowMapper);
     }
 
-    // Formålet er at insætte data fra Damage_report objektet ind i "damage_report" tabellen i databasen ved SQL-forespørgsel.
-    public void CreateDamage_report(DamageReport d) {
-        String sql = "INSERT INTO damage_report (report_id,total_price,contract_id) VALUES (?,?,?)";
-        template.update(sql, d.getReport_id(),d.getTotal_price(),d.getContract_id());
+    public void createDamageReport(DamageReport d) {
+        template.update("INSERT INTO damage_report (report_id,total_price,contract_id) VALUES (?,?,?)",
+                d.getReport_id(),d.getTotal_price(),d.getContract_id());
     }
 
-    // Update en eksiterende skade rapport i databsen, værdierne der opdateres er total_price, contract_ id fra en repport id
-    public void updateDamageReport(DamageReport damageReport, int report_id ){
-        String sql = "UPDATE damage_report SET total_price= ?, contract_id= ? where report_id=?";
-        template.update(sql, damageReport.getTotal_price(), damageReport.getContract_id(), damageReport.getReport_id());
+    public void updateDamageReport(DamageReport damageReport) {
+        template.update("UPDATE damage_report SET total_price= ?, contract_id= ? where report_id=?",
+                damageReport.getTotal_price(), damageReport.getContract_id(), damageReport.getReport_id());
     }
 
-    // Find skaderapport i databasen baseret på dens rapport id.
-    public DamageReport findDamageReportByid(int report_id) {
-        String sql = "Select * FROM damage_report WHERE report_id = ?";
-        RowMapper<DamageReport> rowMapper = new BeanPropertyRowMapper<>(DamageReport.class);
-        List<DamageReport> users = template.query(sql, rowMapper, report_id);
-        if (users.size() == 1) {
-            return users.get(0);
-        } else {
-            return null;
-        }
-
+    public DamageReport findDamageReportById(int report_id) {
+        List<DamageReport> reports = template.query("SELECT * FROM damage_report WHERE report_id = ?", rowMapper, report_id);
+        return reports.size() == 1 ? reports.get(0) : null;
     }
 
-
-
-    // Sletter en skaderapport fra databasen baseret på report id, returnere en boolean værdi  der angiver det vellykket
-    public boolean deleteReport(int report_id){
-        String sql= "DELETE FROM damage_report WHERE report_id=?";
-        return template.update(sql,report_id)>0;
+    public boolean deleteReport(int report_id) {
+        return template.update("DELETE FROM damage_report WHERE report_id=?", report_id) > 0;
     }
-
 }

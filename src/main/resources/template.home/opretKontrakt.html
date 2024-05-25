@@ -1,41 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
   <meta charset="UTF-8">
-  <title>Create Leasing Contract</title>
+  <title>Opret leasingkontrakt</title>
 
   <div th:include="navbar.html"></div>
   <style>
-    table{
-      margin-top: 50px;
-      width: 60%;
-      border-collapse: collapse;
-      font-family: sans-serif;
-      border: 1px solid #ddd;
+    /* Generelle stilarter */
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
-    th{
-      padding: 12px 15px;
-      background-color: #333;
-      color: #fff;
-      text-align: left;
+
+    body {
+      background-color: #f5f5f5;
     }
+
     h1, h2 {
-      color: #333;
       text-align: center;
+      color: #333;
     }
-    form {
-      width: 55%;
+
+    /* Tabel stilarter */
+    table {
+      border-collapse: collapse;
+      width: 100%;
       margin: auto;
       background-color: #fff;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
+
+    th, td {
+      text-align: left;
+      padding: 10px 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* Knap stilarter */
+    input[type="submit"] {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      text-transform: uppercase;
+      color: #ffffff;
+      background-color: #ff6347;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #ff4500;
+    }
+
+    input[type="submit"]:focus {
+      outline: none;
+    }
+
+    input[type="submit"]:active {
+      background-color: #b22222;
+    }
+
+    /* Form stilarter */
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
     label {
       display: block;
       margin-bottom: 10px;
       font-size: 18px;
+      color: #333;
     }
+
     input[type="number"] {
       padding: 10px;
       font-size: 18px;
@@ -45,39 +100,17 @@
       box-sizing: border-box;
       margin-bottom: 20px;
       background-color: #ddd;
-
-    }
-    input[type="submit"] {
-      background-color: #4CAF50;
-      color: #fff;
-      padding: 10px 20px;
-      font-size: 18px;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    input[type="submit"]:hover {
-      background-color: #3e8e41;
-    }
-    .error {
-      color: #f00;
-      font-size: 18px;
-      text-align: center;
-      margin-top: 20px;
     }
   </style>
-
-</head>
 <body>
 
 
-<h1>Oprettelse af en lejekontrakt</h1>
+<h1>Oprettelse af en leasingkontrakt</h1>
 <form method="post" action="/chooseCar">
-  <h2>Vælg en bil ud fra vognnummeret. Se nedenfor for ledig biler</h2>
-  <label for="vehicle_number">Vehicle Number:</label>
-  <input type="number" id="vehicle_number" name="vehicle_number" placeholder="indtast venligt vognnummeret" required>
-  <input type="submit" value="Choose Car">
+  <h2>Vælg en bil ud fra vognnummeret. Se nedenfor for ledige biler</h2>
+  <label for="vehicle_number">Vognnummer:</label>
+  <input type="number" id="vehicle_number" name="vehicle_number" placeholder="Indtast venligst vognnummeret" required>
+  <input type="submit" value="Vælg bil">
   <div class="error" th:text="${flowerror}"></div>
   <div class="error" th:text="${error}"></div>
 </form>
@@ -85,16 +118,16 @@
 <table>
   <thead>
   <tr>
-    <th>Vehicle Number</th>
-    <th>Frame Number</th>
-    <th>Brand</th>
+    <th>Vognnummer</th>
+    <th>Stelnummer</th>
+    <th>Mærke</th>
     <th>Model</th>
-    <th>Make</th>
-    <th>Color</th>
-    <th>Fuel Type</th>
-    <th>Gear Type</th>
-    <th>Moter</th>
-    <th>Price</th>
+    <th>Årgang</th>
+    <th>Farve</th>
+    <th>Brændstoftype</th>
+    <th>Gear type</th>
+    <th>Motor</th>
+    <th>Pris</th>
     <th>Flow</th>
   </tr>
   </thead>
@@ -119,7 +152,7 @@
 </table>
 
 <div class="footer">
-  <p>© 2024 BA - Bil Abonnementen. All rights reserved.</p>
+  <p>© 2024 BA - Bil Abonnementen. Alle rettigheder forbeholdes.</p>
 </div>
 </body>
 </html>

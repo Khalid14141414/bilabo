@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Tilføj skade</title>
     <div th:include="navbar.html"></div>
     <style>
-        .updateSubmit{
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6e6e6;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .AddDamageSubmit {
             display: block;
             width: 100%;
             padding: 10px;
@@ -15,15 +23,26 @@
             text-align: center;
             text-transform: uppercase;
             color: #ffffff;
-            background-color: #007bff;
+            background-color: #27ae60;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .AddDamageSubmit:hover {
+            background-color: #2ecc71;
+        }
+        .footer {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
         }
     </style>
 </head>
 <body>
-<div class="tilføj bil">
+<div class="tilføj skade">
     <h1>Tilføj skade</h1>
     <form method="post" action="/createNewDamage">
 
@@ -33,8 +52,11 @@
         <label for="price">Pris:</label>
         <input type="text" id="price" name="price" required><br><br>
 
-        <input class="updateSubmit" type="submit" value="Tilføj">
+        <input class="AddDamageSubmit" type="submit" value="Tilføj">
     </form>
+</div>
+<div class="footer">
+    <p>© 2024 BA - BilAbonnement. All rights reserved.</p>
 </div>
 </body>
 </html>

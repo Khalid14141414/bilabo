@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <title>Tilføj bil</title>
@@ -7,25 +7,43 @@
     <link rel="stylesheet" href="home.css">
     <div th:include="navbar.html"></div>
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6e6e6;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .AddCarSubmit {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            color: #ffffff;
+            background-color: #27ae60;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .AddCarSubmit:hover {
+            background-color: #2ecc71;
+        }
+        .footer {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
 </head>
-
-<style>
-    .AddCarSubmit{
-        display: block;
-        width: 100%;
-        padding: 10px;
-        margin-top: 10px;
-        font-size: 16px;
-        font-weight: bold;
-        text-align: center;
-        text-transform: uppercase;
-        color: #ffffff;
-        background-color: #007bff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-</style>
 <body>
 
 <div class="tilføj bil">
@@ -66,13 +84,8 @@
 
         <input class="AddCarSubmit" type="submit" value="tilføj en bil">
     </form>
-
-
 </div>
 
-
-</div>
-</div>
 <div class="footer">
     <p>© 2024 BA - BilAbonnement. All rights reserved.</p>
 </div>

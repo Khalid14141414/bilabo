@@ -1,26 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <title>Se lejekontrakt</title>
-    <link rel="stylesheet" href="home.css">
     <div th:include="navbar.html"></div>
     <link rel="stylesheet" href="table.css">
 
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6e6e6;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
         .search-container {
             max-width: 600px;
             margin: 0 auto;
             margin-bottom: 20px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            padding: 20px;
         }
-
         .search-container input {
             width: 100%;
-            padding: 5px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            background-color: #f2f2f2;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .footer {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
         }
     </style>
 
@@ -56,13 +88,10 @@
     </tbody>
 </table>
 
-
-
 <h1 th:text="${username}"></h1>
 
-
 <div class="footer">
-    <p>© 2024 BA - BilAbonnement. All rights reserved.</p>
+    <p>© 2024 BA - BilAbonnement. Alle rettigheder forbeholdes.</p>
 </div>
 </body>
 </html>

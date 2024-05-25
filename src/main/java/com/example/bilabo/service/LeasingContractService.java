@@ -22,6 +22,10 @@ public class LeasingContractService {
         return leasing_contractRepo.fetchFlow1();
     }
 
+    public LeasingContract findContractById(int contractId) {
+        return leasing_contractRepo.findContractByid(contractId);
+    }
+
 
     public void addLeasingContract(LeasingContract leasing_contract){
         leasing_contractRepo.createLeasingContract(leasing_contract);

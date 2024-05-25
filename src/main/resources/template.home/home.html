@@ -1,47 +1,60 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
-    <title>My Dashboard</title>
-    <link rel="stylesheet" href="home.css">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-
-
-
+    <title>Min Dashboard</title>
+    <link rel="icon" href="images/Bet-Cars.png" type="image/x-icon">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6e6e6;
+        }
         .footer {
             background-color: ghostwhite;
-            color: black;
+            color: #2c3e50;
             padding: 10px;
             text-align: center;
             margin-top: 800px;
         }
-
         .center {
             text-align: center;
             margin-top: 150px;
         }
-
         h1 {
+            color: #2c3e50;
             margin-bottom: 20px;
         }
-
-
+        p {
+            color: #2c3e50;
+        }
+        button {
+            background-color: #27ae60;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #2ecc71;
+        }
     </style>
+    <link rel="icon" href="images/Lambo.png" type="image/x-icon">
 </head>
 <body>
 <div th:include="navbar.html"></div>
 
-
-
 <div class="center">
     <h1>Velkommen!</h1>
-    <p>Vælg en af overstående for at komme i gang!</p>
+    <p>Vælg en af ovenstående for at komme i gang!</p>
+    <button>Klik på mig</button>
 </div>
 
 <div class="footer">
-    <p>© 2024 BA - Bil Abonnementen. All rights reserved.</p>
+    <p>© 2024 BA - Bil Abonnementen. Alle rettigheder forbeholdes.</p>
 </div>
 
 </body>

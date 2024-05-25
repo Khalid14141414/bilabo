@@ -4,60 +4,50 @@
     <meta charset="UTF-8">
     <title>Nav</title>
     <link rel="stylesheet" href="home.css">
-
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6e6e6;
+        }
+        .header {
+            background-color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .dashboard-button {
+            font-size: 1em;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #27ae60;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin: 0 10px;
+        }
+        .dashboard-button:hover {
+            background-color: #2ecc71;
+        }
+    </style>
 </head>
 <body>
 
 <div class="header">
     <div class="dashboard">
         <a href="home">
-            <img class="logo" src="images/BILABONNEMENT_rgb_mmahqw.png" alt="Logo">
+            <img class="images" src="/images/Bet-Cars.png" alt="Logo">
         </a>
-        <div class="dashboard-item">
-            <button class="dashboard-button">Dataregistrering</button>
-            <div class="dropdown">
-                <a href="opretlejekontrakt">Opret lejekontrakt</a>
-                <a href="selejekontrakt">Se lejekontrakt</a>
-            </div>
-        </div>
-        <div class="dashboard-item">
-            <button class="dashboard-button">Skader</button>
-            <div class="dropdown">
-                <a href="skaderapport">Skaderapport</a>
-                <a href="skader">Se priser på skader</a>
-            </div>
-        </div>
-        <div class="dashboard-item">
-            <button class="dashboard-button">Rapportering og overvågning</button>
-            <div class="dropdown">
-                <a href="seallebiler">Se alle biler</a>
-                <a href="ledigbiler">Se ledige biler</a>
-                <a  href="sammenlagtpris">Sammenlagt pris på nuværende udlejede biler</a>
-            </div>
-        </div>
-        <div class="dashboard-item">
-            <button class="dashboard-button">
-                Personale</button>
-            <div class="dropdown">
-                <a href="personale">Se ansatte</a>
-            </div>
-
-        </div>
-        <a href="/logout"> <button class="dashboard-button custom-button" > Log ud </button></a>
-
-        <style>
-            .custom-button {
-                border: 1px solid black;
-
-            }
-            .custom-button:hover {
-                background-color: red;
-            }
-
-            .custom-button:active {
-                background-color: whitesmoke;
-            }</style>
-
+        <a href="opretlejekontrakt" class="dashboard-button">Opret lejekontrakt</a>
+        <a href="selejekontrakt" class="dashboard-button">Se lejekontrakt</a>
+        <a href="skaderapport" class="dashboard-button">Skaderapport</a>
+        <a href="skader" class="dashboard-button">Se priser på skader</a>
+        <a href="seallebiler" class="dashboard-button">Se alle biler</a>
+        <a href="ledigbiler" class="dashboard-button">Se ledige biler</a>
+        <a href="sammenlagtpris" class="dashboard-button">Sammenlagt pris på nuværende udlejede biler</a>
+        <a href="personale" class="dashboard-button">Se ansatte</a>
+        <a href="/logout" class="dashboard-button">Log ud</a>
     </div>
 </div>
 

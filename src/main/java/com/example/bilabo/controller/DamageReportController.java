@@ -1,9 +1,11 @@
 package com.example.bilabo.controller;
 
-import com.example.bilabo.model.DamageCategory;
 import com.example.bilabo.model.DamageReport;
 import com.example.bilabo.model.LeasingContract;
-import com.example.bilabo.service.*;
+import com.example.bilabo.service.DamageReportService;
+import com.example.bilabo.service.DamageService;
+import com.example.bilabo.service.EmployeeService;
+import com.example.bilabo.service.LeasingContractService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,161 +15,91 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
 @Controller
 public class DamageReportController {
 
     @Autowired
-    DamageReportService damage_reportService;
+    DamageReportService damageReportService;
     @Autowired
     DamageService damageService;
     @Autowired
-    LeasingContractService leasing_contractService;
-    @Autowired
-    CarService carService;
-
+    LeasingContractService leasingContractService;
     @Autowired
     EmployeeService employeeService;
-    // returner en liste af skaderapporter
+
     @GetMapping("/skaderapport")
-    public String ShowDamage_Report(Model model, HttpSession session){
-        if (!employeeService.checkSession(session)){
-            return "redirect:/";
-        }
-        List<DamageReport> damage_reports = damage_reportService.showReport();
-        model.addAttribute("damage_report", damage_reports);
+    public String showDamageReport(Model model, HttpSession session){
+        if (!employeeService.checkSession(session)) return "redirect:/";
+        model.addAttribute("damage_report", damageReportService.showReport());
         return "skaderapport";
-
     }
 
-    //returner en liste af leasingcontract joined med car hvor flow er 1
-    @GetMapping("skaderapportopret")
-    public String createdamageReport(Model model, HttpSession session,  Integer contract_id) {
-        if (!employeeService.checkSession(session)){
-            return "redirect:/";
-        }
-        List<LeasingContract> leasing_contracts = leasing_contractService.fetchFlow1();
-        model.addAttribute("contract", leasing_contracts);
-
-
+    @GetMapping("/skaderapportopret")
+    public String createDamageReport(Model model, HttpSession session) {
+        if (!employeeService.checkSession(session)) return "redirect:/";
+        model.addAttribute("contract", leasingContractService.fetchFlow1());
         return "skaderapportopret";
-
     }
 
-
-    //returner en liste af leasingcontract joined med car hvor flow er 1, og contract id skal vælges
     @PostMapping("/oprettelseskaderapport")
-    public String opretskaderapport(Model model, HttpSession session, Integer contract_id, RedirectAttributes redirectAttributes){
-        LeasingContract leasing_contract = leasing_contractService.findIdAndFlow(contract_id);
-
-        if (leasing_contract==null){
+    public String submitDamageReport(Model model, HttpSession session, Integer contract_id, RedirectAttributes redirectAttributes){
+        LeasingContract leasingContract = leasingContractService.findIdAndFlow(contract_id);
+        if (leasingContract == null){
             redirectAttributes.addFlashAttribute("fejl", "Vælg venligst et af kontrakterne nedenfor");
             return "redirect:/skaderapportopret";
         }
-        session.setAttribute("contract", leasing_contract.getContract_id());
-        session.setAttribute("leasingcontract", leasing_contract);
+        session.setAttribute("contract", leasingContract.getContract_id());
         return "redirect:/opretskaderapport";
     }
-    //Returner en liste af skader
+
     @GetMapping("opretskaderapport")
-    public String visSkadeRapport(HttpSession session, Model model) {
-        if (!employeeService.checkSession(session)){
-            return "redirect:/";
-        }
-        Integer integer = (Integer) session.getAttribute("contract");
-        List<DamageCategory> damage_category =  damageService.fetchAllDamageCategories();
-        model.addAttribute("category", damage_category);
-        model.addAttribute("contractid", integer);
-        session.setAttribute("contractid", integer);
+    public String displayDamageReport(HttpSession session, Model model) {
+        if (!employeeService.checkSession(session)) return "redirect:/";
+        model.addAttribute("category", damageService.fetchAllDamageCategories());
+        model.addAttribute("contractid", session.getAttribute("contract"));
         return "opretskaderapport";
     }
 
-    // vælg skade og Udregn totalprisen for skaderapport
     @PostMapping("/tilføjRapport")
     public String addDamageReport(Model model, Integer category_id, RedirectAttributes redirectAttributes, Integer finish, HttpSession session, DamageReport damage_report) {
-
         Double totalPrice = (Double) session.getAttribute("totalPrice");
-        if (totalPrice == null) {
-            totalPrice = 0.0;
-        }
-        if (category_id==null && finish==1){
-            return "redirect:/kvitteringSkadeRapport";
-        }
-
-        Double value = damageService.getSpecificDamagePrice(category_id);
-        totalPrice += value;
-
+        if (totalPrice == null) totalPrice = 0.0;
+        if (category_id != null) totalPrice += damageService.getSpecificDamagePrice(category_id);
         session.setAttribute("totalPrice", totalPrice);
-
-
-        if (finish == null) {
-            redirectAttributes.addFlashAttribute("totalPrice", totalPrice);
-            return "redirect:/opretskaderapport";
-
-        }  else {
-            // The finish condition is met, you can redirect or perform any other action here
-            return "redirect:/kvitteringSkadeRapport";
-        }
-
+        return (finish == null) ? "redirect:/opretskaderapport" : "redirect:/kvitteringSkadeRapport";
     }
 
-
-
-    // Hente en kvittering af vores tidligere inputs
     @GetMapping("/kvitteringSkadeRapport")
-    public String kvittering(HttpSession session, Model model){
-        if (!employeeService.checkSession(session)){
-            return "redirect:/";
-        }
-        Double totalpris = (Double) session.getAttribute("totalPrice");
-        Integer integer = (Integer) session.getAttribute("contract");
-        String username = (String) session.getAttribute("username");
-        Integer contractId = (Integer) session.getAttribute("contractid");
-        model.addAttribute("contractid", integer);
-        model.addAttribute("username", username);
-        model.addAttribute("totalprisen", totalpris);
-        model.addAttribute("contractid", contractId);
+    public String receipt(HttpSession session, Model model){
+        if (!employeeService.checkSession(session)) return "redirect:/";
+        model.addAttribute("contractid", session.getAttribute("contract"));
+        model.addAttribute("username", session.getAttribute("username"));
+        model.addAttribute("totalprisen", session.getAttribute("totalPrice"));
         return "kvitteringSkadeRapport";
     }
 
-    // bekræft din kvittering og tilføj din skaderapport
     @PostMapping("/Bekræftkvittering")
-    public String kvitteringForDamageReport(Model model, RedirectAttributes redirectAttributes, Integer finish, HttpSession session, DamageReport damage_report) {
-        LeasingContract leasing_contract = (LeasingContract) session.getAttribute("leasingcontract");
-        damage_reportService.addDamage_report(damage_report);
-        carService.updateAfterDamageReport(leasing_contract.getVehicle_number());
+    public String confirmReceipt(Model model, HttpSession session, DamageReport damage_report) {
+        damageReportService.addDamageReport(damage_report);
         return "redirect:/skaderapport";
     }
 
-    // opdater skaderapport knapper
     @GetMapping("/updateOneDamageReport/{report_id}")
     public String updateDamage(@PathVariable("report_id") int report_id, Model model, HttpSession session) {
-        if (!employeeService.checkSession(session)){
-            return "redirect:/";
-        }
-        DamageReport damageReport = damage_reportService.findSpecifikReport(report_id);
-        model.addAttribute("opdater", damageReport);
+        if (!employeeService.checkSession(session)) return "redirect:/";
+        model.addAttribute("opdater", damageReportService.findSpecificReport(report_id));
         return "opdaterSkadeRapport";
     }
 
-    // opdater skaderapporten
     @PostMapping("/reportUpdate")
-    public String updateReportToList(DamageReport damage_report, int report_id) {
-        damage_reportService.updateReport(damage_report, report_id);
+    public String updateReport(DamageReport damage_report, int report_id) {
+        damageReportService.updateReport(damage_report, report_id);
         return "redirect:/skaderapport";
     }
 
-    // Slet skaderapporten
     @GetMapping("/deleteOneReport/{report_id}")
-    public String deleteOneReport(@PathVariable("report_id") int report_id, HttpSession session){
-        boolean deleted = damage_reportService.deleteReport(report_id);
-        if (deleted){
-            return "redirect:/skaderapport";
-        }else {
-            return "redirect:/skaderapport";
-        }
+    public String deleteReport(@PathVariable("report_id") int report_id, HttpSession session){
+        damageReportService.deleteReport(report_id);
+        return "redirect:/skaderapport";
     }
-
-
 }

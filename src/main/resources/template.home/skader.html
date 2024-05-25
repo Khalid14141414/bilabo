@@ -1,36 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
-
     <title>Skaderapport</title>
-
     <div th:include="navbar.html"></div>
-    <link rel="stylesheet" href="table.css">
-
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6e6e6;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
         .search-container {
             max-width: 600px;
             margin: 0 auto;
             margin-bottom: 20px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            padding: 20px;
         }
-
         .search-container input {
             width: 100%;
-            padding: 5px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
-
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            background-color: #f2f2f2;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .footer {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+        .addCarButton {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            color: #ffffff;
+            background-color: #27ae60;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .addCarButton:hover {
+            background-color: #2ecc71;
+        }
     </style>
-
 </head>
-
+<body>
 <h1>Prisliste på skader</h1>
 <a href="tilføjSkade">
-    <button class="addCarButton" >
+    <button class="addCarButton">
         Tilføj skade
     </button>
 </a>
@@ -46,7 +92,6 @@
     </tr>
     </thead>
     <tbody>
-
     <tr th:each="damages:${category}">
         <td th:text="${damages.category_id}"></td>
         <td th:text="${damages.damage_name}"></td>
@@ -60,12 +105,8 @@
     </tr>
     </tbody>
 </table>
-
-
-
-
 <div class="footer">
-    <p>© 2024 BA - BilAbonnement. All rights reserved.</p>
+    <p>© 2024 BA - BilAbonnement. Alle rettigheder forbeholdes.</p>
 </div>
 </body>
 </html>

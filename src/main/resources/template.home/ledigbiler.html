@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Ledige biler</title>
     <div th:include="navbar.html"></div>
     <link rel="stylesheet" href="table.css">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6e6e6;
+        }
         .search-container {
             max-width: 600px;
             margin: 0 auto;
             margin-bottom: 20px;
         }
-
         .search-container input {
             width: 100%;
             padding: 5px;
@@ -19,6 +22,43 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            background-color: #57a3ee;
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        td:first-child {
+            font-weight: bold;
+            text-align: right;
+            width: 40%;
+        }
+        td:last-child {
+            text-align: left;
+        }
+        form {
+            display: inline-block;
+            margin-top: 20px;
+        }
+        input[type="submit"] {
+            font-size: 1em;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #27ae60;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #2ecc71;
         }
     </style>
 </head>
@@ -30,20 +70,19 @@
     <input type="text" id="search-input" placeholder="Søg...">
 </div>
 
-
 <table>
     <thead>
     <tr>
-        <th>Vehicle Number</th>
-        <th>Frame Number</th>
-        <th>Brand</th>
+        <th>Vognnummer</th>
+        <th>Stelnummer</th>
+        <th>Mærke</th>
         <th>Model</th>
-        <th>Make</th>
-        <th>Color</th>
-        <th>Fuel Type</th>
-        <th>Gear Type</th>
-        <th>Moter</th>
-        <th>Price</th>
+        <th>Årgang</th>
+        <th>Farve</th>
+        <th>Brændstoftype</th>
+        <th>Gear type</th>
+        <th>Motor</th>
+        <th>Pris</th>
         <th>Flow</th>
     </tr>
     </thead>
@@ -67,7 +106,7 @@
 </table>
 
 <div class="footer">
-    <p>© 2024 BA - Bil Abonnementen. All rights reserved.</p>
+    <p>© 2024 BA - Bil Abonnementen. Alle rettigheder forbeholdes.</p>
 </div>
 
 </html>

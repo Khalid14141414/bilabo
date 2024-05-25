@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <title>Valgt Bil</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin-top: 175px
+            background-color: #e6e6e6;
+            margin-top: 175px;
         }
         h1, h2 {
-            color: #333;
+            color: #2c3e50;
             text-align: center;
         }
         h2 span {
-            color: #4CAF50;
+            color: #27ae60;
             font-weight: bold;
         }
         button {
-            background-color: #4CAF50;
+            background-color: #27ae60;
             color: #fff;
             padding: 10px 20px;
             font-size: 18px;
@@ -28,7 +28,7 @@
             transition: all 0.3s ease;
         }
         button:hover {
-            background-color: #3e8e41;
+            background-color: #2ecc71;
         }
         .btn-group {
             display: flex;
@@ -45,9 +45,9 @@
 
 <h2 th:text="${opdater.getBrand() + ' ' + opdater.getModel() +' ' + opdater.getMake()}"></h2>
 
-<h2>Prisen på bilen pr. måned er: <span th:text="${opdater.getPrice()}"> </span> DKK</h2>
+<h2>Månedlig pris for bilen er: <span th:text="${opdater.getPrice()}"> </span> DKK</h2>
 
-<h2>Vil du gerne fortsætte?</h2>
+<h2>Vil du fortsætte?</h2>
 
 <div class="btn-group">
     <a href="lej"><button>Ja</button></a>

@@ -10,6 +10,7 @@ import java.util.Map;
 
 @Service
 public class CarService {
+
     @Autowired
     private CarRepo carRepo;
 
@@ -17,12 +18,14 @@ public class CarService {
         return carRepo.fetchAll();
     }
 
-    public List<Car>fetchAvailable(){
+    public List<Car> fetchAvailable(){
         return carRepo.fetchAvailable();
     }
-    public void addCar( Car car){
+
+    public void addCar(Car car){
         carRepo.addCar(car);
     }
+
     public boolean deleteCar(int id){
         return carRepo.deleteCar(id);
     }
@@ -30,31 +33,26 @@ public class CarService {
     public void updateCar(Car car, int id){
         carRepo.updateCar(car, id);
     }
-    public void updateAfterContract(int id){
-        carRepo.updateAfterContract(id);
-    }
+
     public Car findId(int id){
         return carRepo.findCarByid(id);
     }
 
-    // bruger list til at indholde bilerne og udfra dette beregner og summere alle bilernes pris sammen.
     public double calculateTotalPriceOfRentedCars() {
-        List<Car> rentedCars = carRepo.fetchRentedCars(); // Hent de udlejet biler
+        var rentedCars = carRepo.fetchRentedCars();
         double totalPrice = 0.0;
-
         for (Car car : rentedCars) {
-            if (car.getFlow() == 1) { // Tjek hvis bil er udlejet (flow = 1)
-                totalPrice += car.getPrice(); // Tilføj bilens pris til den totale pris
+            if (car.getFlow() == 1) {
+                totalPrice += car.getPrice();
             }
         }
-
         return totalPrice;
     }
-
 
     public void updateAfterDamageReport(int id){
         carRepo.updateAfterDamageReport(id);
     }
+
     public List<Map<String, Object>> TotalpriceData() {
         return carRepo.getTotalPricesData();
     }
