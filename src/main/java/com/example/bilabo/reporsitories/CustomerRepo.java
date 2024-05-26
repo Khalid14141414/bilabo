@@ -17,24 +17,29 @@ public class CustomerRepo {
 
     private RowMapper<Customer> rowMapper = new BeanPropertyRowMapper<>(Customer.class);
 
+    // Opretter en ny kunde i databasen
     public void createCustomer(Customer c){
-        template.update("INSERT INTO customer (customer_id,full_name, email, phone, address, cpr) VALUES(?,?,?,?,?,?)",
+        template.update("INSERT INTO customer (customer_id, full_name, email, phone, address, cpr) VALUES(?,?,?,?,?,?)",
                 c.getCustomer_id(),  c.getFull_name(), c.getEmail(), c.getPhone(), c.getAddress(), c.getCpr());
     }
 
+    // Henter alle kunder fra databasen
     public List<Customer> fetchAll() {
         return template.query("SELECT * FROM customer", rowMapper);
     }
 
+    // Opdaterer kundeoplysninger i databasen
     public void updateCustomer(Customer customer, int customer_id) {
         template.update("UPDATE customer SET full_name = ?, email = ?, phone = ?, address = ?, cpr = ? WHERE customer_id = ?",
                 customer.getFull_name(), customer.getEmail(), customer.getPhone(), customer.getAddress(), customer.getCpr(), customer.getCustomer_id());
     }
 
+    // Finder en kunde i databasen ved deres kunde-id
     public Customer findCustomerByid(int customer_id){
         return template.queryForObject("Select * FROM customer WHERE customer_id = ?", rowMapper, customer_id);
     }
 
+    // Finder kunde-id ved e-mail
     public String findIdByEmail(String email){
         return template.queryForObject("Select customer_id FROM customer WHERE email = ?", String.class, email);
     }

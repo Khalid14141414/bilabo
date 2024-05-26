@@ -12,31 +12,35 @@ public class DamageService {
     @Autowired
     DamageRepo damageRepo;
 
-    public List<DamageCategory> fetchAllDamageCategories(){
+    // Henter alle skadekategorier
+    public List<DamageCategory> fetchAllDamageCategories() {
         return damageRepo.fetchAll();
     }
 
-    public void addDamage(DamageCategory damage_category){
+    // Tilføjer en ny skadekategori
+    public void addDamage(DamageCategory damage_category) {
         damageRepo.AddDamage(damage_category);
     }
 
-    public void updateCategory(DamageCategory damage_category, int category_id){
+    // Opdaterer en skadekategori ved kategori-id
+    public void updateCategory(DamageCategory damage_category, int category_id) {
         damageRepo.updateDamage(damage_category, category_id);
     }
-    public boolean deleteDamage(int category_id){
+
+    // Sletter en skadekategori ved kategori-id
+    public boolean deleteDamage(int category_id) {
         return damageRepo.deleteDamage(category_id);
     }
 
-    public DamageCategory findSpecifikDamage(int category_id){
+    // Finder en specifik skadekategori ved kategori-id
+    public DamageCategory findSpecifikDamage(int category_id) {
         return damageRepo.findDamageByid(category_id);
     }
 
+    // Henter prisen for en specifik skadekategori ved kategori-id
     public Double getSpecificDamagePrice(int category_id) {
         return damageRepo.findSpecificDamagePrice(category_id);
     }
-
-
-
 }
 
 

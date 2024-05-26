@@ -14,30 +14,37 @@ public class CarService {
     @Autowired
     private CarRepo carRepo;
 
+    // Henter alle biler
     public List<Car> fetchAll() {
         return carRepo.fetchAll();
     }
 
-    public List<Car> fetchAvailable(){
+    // Henter alle tilgængelige biler (flow = 0)
+    public List<Car> fetchAvailable() {
         return carRepo.fetchAvailable();
     }
 
-    public void addCar(Car car){
+    // Tilføjer en ny bil
+    public void addCar(Car car) {
         carRepo.addCar(car);
     }
 
-    public boolean deleteCar(int id){
+    // Sletter en bil ved id
+    public boolean deleteCar(int id) {
         return carRepo.deleteCar(id);
     }
 
-    public void updateCar(Car car, int id){
+    // Opdaterer en bil ved id
+    public void updateCar(Car car, int id) {
         carRepo.updateCar(car, id);
     }
 
-    public Car findId(int id){
+    // Finder en bil ved id
+    public Car findId(int id) {
         return carRepo.findCarByid(id);
     }
 
+    // Beregner den samlede pris af lejede biler (flow = 1)
     public double calculateTotalPriceOfRentedCars() {
         var rentedCars = carRepo.fetchRentedCars();
         double totalPrice = 0.0;
@@ -49,10 +56,12 @@ public class CarService {
         return totalPrice;
     }
 
-    public void updateAfterDamageReport(int id){
+    // Opdaterer bilen efter en skadesrapport (sætter flow = 2)
+    public void updateAfterDamageReport(int id) {
         carRepo.updateAfterDamageReport(id);
     }
 
+    // Henter totalpriserne og relaterede data
     public List<Map<String, Object>> TotalpriceData() {
         return carRepo.getTotalPricesData();
     }

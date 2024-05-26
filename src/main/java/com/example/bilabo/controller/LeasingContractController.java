@@ -30,6 +30,7 @@ public class LeasingContractController {
     @Autowired
     EmployeeService employeeService;
 
+    // Viser siden til oprettelse af en ny leasingkontrakt med tilgængelige biler.
     @GetMapping("/opretKontrakt")
     public String leasingKontrakt(Model model, HttpSession session) {
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -37,6 +38,7 @@ public class LeasingContractController {
         return "opretKontrakt";
     }
 
+    // Vælger en bil til leasingkontrakten og viser detaljer om den valgte bil.
     @PostMapping("/chooseCar")
     public String seBiler(Model model, int vehicle_number, HttpSession session, RedirectAttributes redirectAttributes) {
         Car car = carService.findId(vehicle_number);
@@ -49,6 +51,7 @@ public class LeasingContractController {
         return "bilValgt";
     }
 
+    // Viser alle eksisterende leasingkontrakter og den samlede pris for alle kontrakter.
     @GetMapping("/selejekontrakt")
     public String Leasing_contracts(Model model, HttpSession session){
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -57,6 +60,7 @@ public class LeasingContractController {
         return "seLejekontrakt";
     }
 
+    // Viser siden til oprettelse af leasingkontrakt med oplysninger om den valgte bil og tilgængelige kunder.
     @GetMapping("/lej")
     public String leasing(Model model, HttpSession session) {
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -70,6 +74,7 @@ public class LeasingContractController {
         return "error";
     }
 
+    // Opretter en ny leasingkontrakt og beregner den samlede pris baseret på leasingperioden.
     @PostMapping("/createLeasingContract")
     public String createLease(LocalDate start_date, LocalDate end_date, Model model, HttpSession session, int customer_id, String username, RedirectAttributes redirectAttributes) {
         int numb = (int) session.getAttribute("numb");
@@ -91,6 +96,7 @@ public class LeasingContractController {
         return "redirect:/leaseconfirm";
     }
 
+    // Beregner den samlede pris for leasing baseret på leasingperioden og bilens månedlige pris.
     private double calculateTotalPrice(Period period, double monthlyPrice) {
         double totalPrice = monthlyPrice * period.getMonths();
         if (period.getDays() > 0) {
@@ -101,6 +107,7 @@ public class LeasingContractController {
         return totalPrice;
     }
 
+    // Viser en bekræftelsesside for leasingkontrakten med detaljer om bil, kunde og pris.
     @GetMapping("/leaseconfirm")
     public String leasingConfirmation(Model model, HttpSession session) {
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -114,6 +121,7 @@ public class LeasingContractController {
         return "leaseconfirm";
     }
 
+    // Bekræfter og gemmer den oprettede leasingkontrakt.
     @PostMapping("/createLeasingContractConfirmed")
     public String leasingAdd(Model model, HttpSession session, LeasingContract leasing_contract) {
         leasingContractService.addLeasingContract(leasing_contract);

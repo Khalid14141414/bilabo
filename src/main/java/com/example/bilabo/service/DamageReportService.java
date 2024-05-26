@@ -6,30 +6,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 public class DamageReportService {
 
     @Autowired
     DamageReportRepo damageReportRepo;
 
+    // Viser alle skaderapporter
     public List<DamageReport> showReport() {
         return damageReportRepo.fetchAll();
     }
 
-    public void addDamageReport(DamageReport damageReport){
+    // Tilføjer en ny skaderapport
+    public void addDamageReport(DamageReport damageReport) {
         damageReportRepo.createDamageReport(damageReport);
     }
 
-    public void updateReport(DamageReport damageReport, int report_id){
+    // Opdaterer en skaderapport ved rapport-id
+    public void updateReport(DamageReport damageReport, int report_id) {
         damageReportRepo.updateDamageReport(damageReport);
     }
 
-    public DamageReport findSpecificReport(int reportId){
+    // Finder en specifik skaderapport ved rapport-id
+    public DamageReport findSpecificReport(int reportId) {
         return damageReportRepo.findDamageReportById(reportId);
     }
 
-    public boolean deleteReport(int reportId){
+    // Sletter en skaderapport ved rapport-id
+    public boolean deleteReport(int reportId) {
         return damageReportRepo.deleteReport(reportId);
     }
 }

@@ -1,8 +1,10 @@
 package com.example.bilabo.controller;
 
 import com.example.bilabo.model.Car;
+import com.example.bilabo.model.Employee;
 import com.example.bilabo.service.CarService;
 import com.example.bilabo.service.EmployeeService;
+import com.example.bilabo.service.LeasingContractService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +23,10 @@ public class CarController {
     CarService carService;
     @Autowired
     EmployeeService employeeService;
+    @Autowired
+    LeasingContractService leasingContractService;
 
+    // Viser alle biler tilgængelige for salg.
     @GetMapping("/seallebiler")
     public String car(Model model, HttpSession session) {
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -29,6 +34,7 @@ public class CarController {
         return "seallebiler";
     }
 
+    // Viser alle ledige biler.
     @GetMapping("/ledigbiler")
     public String getAvailableCars(Model model, HttpSession session) {
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -36,18 +42,21 @@ public class CarController {
         return "ledigbiler";
     }
 
+    // Tilføjer en ny bil til listen.
     @PostMapping("/createNew")
     public String addCartoList(Car car) {
         carService.addCar(car);
         return "redirect:/seallebiler";
     }
 
+    // Sletter en bil baseret på køretøjets nummer.
     @GetMapping("/deleteOne/{vehicle_number}")
     public String deleteOne(@PathVariable("vehicle_number") int vehicle_number){
         carService.deleteCar(vehicle_number);
         return "redirect:/seallebiler";
     }
 
+    // Henter information om en bil for at opdatere den.
     @GetMapping("/opdaterBilen/{vehicle_number}")
     public String updateCar(@PathVariable("vehicle_number") int vehicle_number, Model model, HttpSession session) {
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -55,29 +64,31 @@ public class CarController {
         return "opdaterBil";
     }
 
+    // Opdaterer en bils information i systemet.
     @PostMapping("/carupdate")
     public String updateCarToList(Car car, int vehicle_number) {
         carService.updateCar(car, vehicle_number);
         return "redirect:/seallebiler";
     }
 
-    @GetMapping("/totalPriceOfRentedCars")
-    public String getTotalPriceOfRentedCars(Model model) {
+    @GetMapping("/sammenlagtpris")
+    public String getTotalPrice(Model model, HttpSession session) {
+        if (!employeeService.checkSession(session)) {
+            return "redirect:/";
+        }
+        Employee adminLogin = (Employee) session.getAttribute("adminlogin");
+
+        model.addAttribute("admin", adminLogin);
+
         double totalPrice = carService.calculateTotalPriceOfRentedCars();
         model.addAttribute("totalPrice", totalPrice);
-        return "sammenlagtspris"; // return the name of your view
-        }
 
-        @PostMapping("/updateAfterDamageReport/{id}")
-        public String updateAfterDamageReport(@PathVariable("id") int id) {
-            carService.updateAfterDamageReport(id);
-            return "redirect:/"; // redirect to the desired URL
-        }
+        double totalPrices = leasingContractService.calculateTotalPriceOfLeasingContracts();
+        model.addAttribute("totalPrices", totalPrices);
 
-        @GetMapping("/totalPriceData")
-        public String getTotalPriceData(Model model) {
-            List<Map<String, Object>> totalPriceData = carService.TotalpriceData();
-            model.addAttribute("totalPriceData", totalPriceData);
-            return "totalPriceDataView"; // return the name of your view
-        }
+        List<Map<String, Object>> rentedCars = carService.TotalpriceData();
+        model.addAttribute("rentedCars", rentedCars);
+
+        return "sammenlagtspris";  // This should match `sammenlagtpris.html`
     }
+}

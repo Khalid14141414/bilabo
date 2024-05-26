@@ -19,27 +19,32 @@ public class LeasingContractRepo {
 
     private RowMapper<LeasingContract> rowMapper = new BeanPropertyRowMapper<>(LeasingContract.class);
 
-    public List<LeasingContract> fetchAll(){
+    // Henter alle leasingkontrakter fra databasen
+    public List<LeasingContract> fetchAll() {
         return jdbcTemplate.query("SELECT * FROM leasing_contract", rowMapper);
     }
 
-    public List<LeasingContract> fetchFlow1(){
-        return jdbcTemplate.query("SELECT * FROM leasing_contract Join car using(vehicle_number) where flow = 1", rowMapper);
+    // Henter leasingkontrakter med flow = 1 ved at sammenkæde med biloplysninger
+    public List<LeasingContract> fetchFlow1() {
+        return jdbcTemplate.query("SELECT * FROM leasing_contract JOIN car USING(vehicle_number) WHERE flow = 1", rowMapper);
     }
 
+    // Opretter en ny leasingkontrakt i databasen
     public void createLeasingContract(LeasingContract leasingContract) {
         jdbcTemplate.update("INSERT INTO leasing_contract (start_date, end_date, price, vehicle_number, username, customer_id) VALUES (?, ?, ?, ?, ?, ?)",
                 leasingContract.getStart_date(), leasingContract.getEnd_date(), leasingContract.getPrice(),
                 leasingContract.getVehicle_number(), leasingContract.getUsername(), leasingContract.getCustomer_id());
     }
 
+    // Finder en leasingkontrakt i databasen ved dens kontrakt-id
     public LeasingContract findContractByid(int contract_id) {
-        List<LeasingContract> contracts = jdbcTemplate.query("Select * FROM leasing_contract WHERE contract_id = ?", rowMapper, contract_id);
+        List<LeasingContract> contracts = jdbcTemplate.query("SELECT * FROM leasing_contract WHERE contract_id = ?", rowMapper, contract_id);
         return contracts.size() == 1 ? contracts.get(0) : null;
     }
 
+    // Finder en leasingkontrakt med flow = 1 i databasen ved dens kontrakt-id
     public LeasingContract findContractByidAndFlow(int contract_id) {
-        List<LeasingContract> contracts = jdbcTemplate.query("SELECT * FROM leasing_contract Join car using(vehicle_number) where flow = 1 and contract_id = ?", rowMapper, contract_id);
+        List<LeasingContract> contracts = jdbcTemplate.query("SELECT * FROM leasing_contract JOIN car USING(vehicle_number) WHERE flow = 1 AND contract_id = ?", rowMapper, contract_id);
         return contracts.size() == 1 ? contracts.get(0) : null;
     }
 }

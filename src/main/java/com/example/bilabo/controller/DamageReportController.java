@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 @Controller
 public class DamageReportController {
 
@@ -27,13 +28,15 @@ public class DamageReportController {
     @Autowired
     EmployeeService employeeService;
 
+    // Viser en liste over alle skaderapporter.
     @GetMapping("/skaderapport")
-    public String showDamageReport(Model model, HttpSession session){
+    public String showDamageReport(Model model, HttpSession session) {
         if (!employeeService.checkSession(session)) return "redirect:/";
         model.addAttribute("damage_report", damageReportService.showReport());
         return "skaderapport";
     }
 
+    // Viser siden til oprettelse af en ny skaderapport.
     @GetMapping("/skaderapportopret")
     public String createDamageReport(Model model, HttpSession session) {
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -41,10 +44,11 @@ public class DamageReportController {
         return "skaderapportopret";
     }
 
+    // Bekræfter valget af en leasingkontrakt til skaderapporten.
     @PostMapping("/oprettelseskaderapport")
-    public String submitDamageReport(Model model, HttpSession session, Integer contract_id, RedirectAttributes redirectAttributes){
+    public String submitDamageReport(Model model, HttpSession session, Integer contract_id, RedirectAttributes redirectAttributes) {
         LeasingContract leasingContract = leasingContractService.findIdAndFlow(contract_id);
-        if (leasingContract == null){
+        if (leasingContract == null) {
             redirectAttributes.addFlashAttribute("fejl", "Vælg venligst et af kontrakterne nedenfor");
             return "redirect:/skaderapportopret";
         }
@@ -52,6 +56,7 @@ public class DamageReportController {
         return "redirect:/opretskaderapport";
     }
 
+    // Viser formularen til oprettelse af en ny skaderapport.
     @GetMapping("opretskaderapport")
     public String displayDamageReport(HttpSession session, Model model) {
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -60,6 +65,7 @@ public class DamageReportController {
         return "opretskaderapport";
     }
 
+    // Tilføjer en skadekategori til skaderapporten og opdaterer den samlede pris.
     @PostMapping("/tilføjRapport")
     public String addDamageReport(Model model, Integer category_id, RedirectAttributes redirectAttributes, Integer finish, HttpSession session, DamageReport damage_report) {
         Double totalPrice = (Double) session.getAttribute("totalPrice");
@@ -69,37 +75,13 @@ public class DamageReportController {
         return (finish == null) ? "redirect:/opretskaderapport" : "redirect:/kvitteringSkadeRapport";
     }
 
+    // Viser kvitteringen for skaderapporten.
     @GetMapping("/kvitteringSkadeRapport")
-    public String receipt(HttpSession session, Model model){
+    public String receipt(HttpSession session, Model model) {
         if (!employeeService.checkSession(session)) return "redirect:/";
         model.addAttribute("contractid", session.getAttribute("contract"));
         model.addAttribute("username", session.getAttribute("username"));
-        model.addAttribute("totalprisen", session.getAttribute("totalPrice"));
+        model.addAttribute("totalPrice", session.getAttribute("totalPrice"));
         return "kvitteringSkadeRapport";
-    }
-
-    @PostMapping("/Bekræftkvittering")
-    public String confirmReceipt(Model model, HttpSession session, DamageReport damage_report) {
-        damageReportService.addDamageReport(damage_report);
-        return "redirect:/skaderapport";
-    }
-
-    @GetMapping("/updateOneDamageReport/{report_id}")
-    public String updateDamage(@PathVariable("report_id") int report_id, Model model, HttpSession session) {
-        if (!employeeService.checkSession(session)) return "redirect:/";
-        model.addAttribute("opdater", damageReportService.findSpecificReport(report_id));
-        return "opdaterSkadeRapport";
-    }
-
-    @PostMapping("/reportUpdate")
-    public String updateReport(DamageReport damage_report, int report_id) {
-        damageReportService.updateReport(damage_report, report_id);
-        return "redirect:/skaderapport";
-    }
-
-    @GetMapping("/deleteOneReport/{report_id}")
-    public String deleteReport(@PathVariable("report_id") int report_id, HttpSession session){
-        damageReportService.deleteReport(report_id);
-        return "redirect:/skaderapport";
     }
 }

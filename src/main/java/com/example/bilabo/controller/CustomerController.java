@@ -19,6 +19,7 @@ public class CustomerController {
     @Autowired
     EmployeeService employeeService;
 
+    // Viser siden til oprettelse af lejekontrakt og henter alle kunder.
     @GetMapping("/opretlejekontrakt")
     public String lejekontrakt (Model model, HttpSession session){
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -26,6 +27,7 @@ public class CustomerController {
         return "opretLejekontrakt";
     }
 
+    // Opretter en ny kunde og gemmer den i sessionen.
     @PostMapping("/opretenkunde")
     public String createCustomer (Customer c, HttpSession session){
         customerService.createCustomer(c);
@@ -33,12 +35,14 @@ public class CustomerController {
         return "redirect:/opretNyKundeConfirmed";
     }
 
+    // Viser siden til oprettelse af en ny kunde.
     @GetMapping("/opretNyKunde")
     public String CreateNewCustomer(HttpSession session){
         if (!employeeService.checkSession(session)) return "redirect:/";
         return "opretNyKunde";
     }
 
+    // Bekræfter oprettelsen af en ny kunde og viser kundens oplysninger.
     @GetMapping("/opretNyKundeConfirmed")
     public String newCustomerCreated(HttpSession session, Model model){
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -46,6 +50,7 @@ public class CustomerController {
         return "opretNyKundeConfirmed";
     }
 
+    // Henter oplysninger om en kunde for at opdatere dem.
     @GetMapping("/opdaterkunde/{customer_id}")
     public String updateCustomer(@PathVariable("customer_id") int customer_id, Model model, HttpSession session){
         if (!employeeService.checkSession(session)) return "redirect:/";
@@ -53,17 +58,18 @@ public class CustomerController {
         return "opdaterKunde";
     }
 
+    // Opdaterer en kundes oplysninger i systemet.
     @PostMapping("/opdaterkunden")
-    public String updateTheCustomer(Customer c,int customer_id){
+    public String updateTheCustomer(Customer c, int customer_id){
         customerService.updateCustomer(c, customer_id);
         return "redirect:/opretlejekontrakt";
     }
 
-
-        @GetMapping("/findCustomerId/{email}")
-        public String findCustomerId(@PathVariable("email") String email, Model model) {
-            String customerId = customerService.findCustomerid(email);
-            model.addAttribute("customerId", customerId);
-            return "customerIdView"; // return the name of your view
-        }
+    // Finder en kundes ID baseret på deres e-mail.
+    @GetMapping("/findCustomerId/{email}")
+    public String findCustomerId(@PathVariable("email") String email, Model model) {
+        String customerId = customerService.findCustomerid(email);
+        model.addAttribute("customerId", customerId);
+        return "customerIdView"; // return the name of your view
     }
+}

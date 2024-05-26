@@ -55,6 +55,8 @@
         }
     </style>
 </head>
+
+<h1 th:if="${admin.getIs_admin()==0}">Kan kun ses af admin.</h1>
 <body th:if="${admin.getIs_admin()==1}" >
 <h1>
     <p th:if="${admin.getIs_admin()==1}" >Sammenlagt totalpris for udlejet biler: <span th:text="${totalPrices}"></span> dkk</p>
@@ -65,3 +67,51 @@
 
 <div class="search-container">
     <input type="text" id="searchInput" placeholder="Søg..." />
+
+</div>
+
+<h2 >Liste af udlejet biler:</h2>
+<h2 th:if="${admin.getIs_admin()==0}">Kan kun ses af admin:</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Vehicle Number</th>
+        <th>Frame Number</th>
+        <th>Brand</th>
+        <th>Flow</th>
+        <th>Contract ID</th>
+        <th>Username</th>
+        <th>Customer ID</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Car Price</th>
+        <th>Contract Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rentedCars : ${rentedCars}">
+        <td th:text="${rentedCars['vehicle_number']}"></td>
+        <td th:text="${rentedCars['frame_number']}"></td>
+        <td th:text="${rentedCars['brand']}"></td>
+        <td th:text="${rentedCars['flow']}"></td>
+        <td th:text="${rentedCars['contract_id']}"></td>
+        <td th:text="${rentedCars['username']}"></td>
+        <td th:text="${rentedCars['customer_id']}"></td>
+        <td th:text="${rentedCars['start_date']}"></td>
+        <td th:text="${rentedCars['end_date']}"></td>
+        <td th:text="${rentedCars['car_price']}"></td>
+        <td th:text="${rentedCars['contract_price']}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+
+
+<div class="footer">
+    <p>© 2024 BA - Bil Abonnementen. All rights reserved.</p>
+</div>
+
+</body>
+</html>
