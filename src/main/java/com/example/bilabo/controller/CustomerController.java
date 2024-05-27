@@ -24,7 +24,7 @@ public class CustomerController {
     public String lejekontrakt (Model model, HttpSession session){
         if (!employeeService.checkSession(session)) return "redirect:/";
         model.addAttribute("customers", customerService.fetchAll());
-        return "opretLejekontrakt";
+        return "opretLejeKontrakt";
     }
 
     // Opretter en ny kunde og gemmer den i sessionen.
@@ -62,7 +62,7 @@ public class CustomerController {
     @PostMapping("/opdaterkunden")
     public String updateTheCustomer(Customer c, int customer_id){
         customerService.updateCustomer(c, customer_id);
-        return "redirect:/opretlejekontrakt";
+        return "redirect:/opretLejeKontrakt";
     }
 
     // Finder en kundes ID baseret på deres e-mail.
